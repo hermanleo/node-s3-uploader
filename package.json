@@ -1,6 +1,6 @@
 {
-  "name": "s3-uploader",
-  "version": null,
+  "name": "s3-uploader-proxy",
+  "version": "0.0.1",
   "description": "Resize, rename, and upload images to AWS S3",
   "main": "index.js",
   "files": [
