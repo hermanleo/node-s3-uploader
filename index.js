@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const extname = require('path').extname;
-const S3 = require('aws-sdk').S3;
+const AWS = require('aws-sdk');
 
 const auto = require('async').auto;
 const each = require('async').each;
@@ -157,7 +157,18 @@ const Upload = function Upload(bucketName, opts) {
   }
 
   this._randomPath = this.opts.randomPath || uuid;
-  this.s3 = new S3(this.opts.aws);
+
+  if (this.opts.httpProxy) {
+    const proxy = require('proxy-agent');
+
+    AWS.config.update({
+      httpOptions: {
+        agent: proxy(this.opts.httpProxy)
+      }
+    });
+  }
+
+  this.s3 = new AWS.S3(this.opts.aws);
 
   return this;
 };
